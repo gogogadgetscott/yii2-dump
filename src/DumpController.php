@@ -23,9 +23,9 @@ use gogogadgetscott\dump\models\Schema;
  * return [
  *     'controllerMap' => [
  *         'dump' => [
- *             'class' => 'hzhihua\\dump\\DumpController',
+ *             'class' => 'gogogadgetscott\\dump\\DumpController',
  *             'db' => 'db', // Connection
- *             'templateFile' => '@vendor/hzhihua/yii2-dump/templates/migration.php',
+ *             'templateFile' => '@vendor/gogogadgetscott/yii2-dump/templates/migration.php',
  *             'generatePath' => '@console/migrations',
  *             'table' => 'table1,table2', // select which table will be dump(default filter migration table)
  *             'filter' => 'table3,table4', // table3 and table4 will be filtered when generating migration file
@@ -38,7 +38,7 @@ use gogogadgetscott\dump\models\Schema;
  *
  * ## Default Table Options
  * > ENGINE=InnoDB CHARACTER SET=utf8 COLLATE=utf8_unicode_ci
- * it was defined at "@vendor/hzhihua/yii2-dump/src/Migration.php" file
+ * it was defined at "@vendor/gogogadgetscott/yii2-dump/src/Migration.php" file
  * 
  * ## Default Limit
  * ```
@@ -157,7 +157,7 @@ class DumpController extends Controller
      * Usage:
      * ```php
      * [
-     *      'class' => 'hzhihua\dump\DumpController',
+     *      'class' => 'gogogadgetscott\dump\DumpController',
      *      'filePrefix' => '123456_789012',
      * ],
      * ```
@@ -242,12 +242,12 @@ class DumpController extends Controller
     /**
      * @var string $schema get schema table data
      */
-    public $schema = 'hzhihua\dump\models\Schema';
+    public $schema = 'gogogadgetscott\dump\models\Schema';
 
     /**
      * @var string output table content at terminal or file
      */
-    public $output = 'hzhihua\dump\models\Output';
+    public $output = 'gogogadgetscott\dump\models\Output';
 
     /**
      * @var string the directory of generating migrate file
@@ -257,7 +257,7 @@ class DumpController extends Controller
     /**
      * @var string the directory of migrate template file
      */
-    public $templateFile = '@vendor/hzhihua/yii2-dump/templates/migration.php';
+    public $templateFile = '@vendor/gogogadgetscott/yii2-dump/templates/migration.php';
 
     /**
      * change the order of applying migration file
@@ -347,7 +347,7 @@ class DumpController extends Controller
         $this->schema = Instance::ensure($this->schema, Schema::class);
         $this->db = Instance::ensure($this->db, Connection::class);
         $this->schema->db = isset($schema['db']) ? Instance::ensure($schema['db'], Connection::class) : $this->db;
-        $this->output = Instance::ensure($this->output, 'hzhihua\dump\Models\Output');
+        $this->output = Instance::ensure($this->output, 'gogogadgetscott\dump\Models\Output');
 
         Yii::$app->i18n->translations['dump*'] =
             $this->translations ?: [

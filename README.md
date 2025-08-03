@@ -12,7 +12,7 @@ Generate migration file from an existing database
 ## Installation
 
 ```
-composer require --prefer-dist "hzhihua/yii2-dump:1.0.3"
+composer require --prefer-dist "gogogadgetscott/yii2-dump:1.0.3"
 ```
 ## Change
 - Legacy signature (deprecated as of PHP 7.4.0, removed as of PHP 8.0.0):
@@ -28,7 +28,7 @@ Add the following in console/config/main.php:
 return [
     'controllerMap' => [
         'dump' => [
-            'class' => 'hzhihua\dump\DumpController',
+            'class' => 'gogogadgetscott\dump\DumpController',
             'filePrefix' => '123456_654321',
             'tableOptions' => 'ENGINE=InnoDB CHARACTER SET=utf8 COLLATE=utf8_unicode_ci', // if mysql >= 5.7, you can set “ENGINE=InnoDB CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci”,
         ],
@@ -42,9 +42,9 @@ return [
 return [
     'controllerMap' => [
         'dump' => [
-            'class' => 'hzhihua\\dump\\DumpController',
+            'class' => 'gogogadgetscott\\dump\\DumpController',
             'db' => 'db', // Connection
-            'templateFile' => '@vendor/hzhihua/yii2-dump/templates/migration.php',
+            'templateFile' => '@vendor/gogogadgetscott/yii2-dump/templates/migration.php',
             'generatePath' => '@console/migrations',
             'table' => 'table1,table2', // select which table will be dump(default filter migration table)
             'filter' => 'table3,table4', // table3 and table4 will be filtered when generating migration file
@@ -61,7 +61,7 @@ return [
 ```tableOptions
 ENGINE=InnoDB CHARACTER SET=utf8 COLLATE=utf8_unicode_ci
 ```
-> it was defined at "@vendor/hzhihua/yii2-dump/src/Migration.php" file [see](src/Migration.php)
+> it was defined at "@vendor/gogogadgetscott/yii2-dump/src/Migration.php" file [see](src/Migration.php)
 
 ## Default Limit
 ```
