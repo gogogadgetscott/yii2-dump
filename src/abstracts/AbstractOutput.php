@@ -5,7 +5,7 @@
  * @Email cnzhihua@gmail.com
  */
 
-namespace hzhihua\dump\abstracts;
+namespace gogogadgetscott\dump\abstracts;
 
 use yii\base\Component;
 use yii\helpers\Console;

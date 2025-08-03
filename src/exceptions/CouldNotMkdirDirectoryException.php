@@ -5,7 +5,7 @@
  * @Email cnzhihua@gmail.com
  */
 
-namespace hzhihua\dump\exceptions;
+namespace gogogadgetscott\dump\exceptions;
 
 
 use yii\console\Exception;

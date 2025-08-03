@@ -5,7 +5,7 @@
  * @Email cnzhihua@gmail.com
  */
 
-namespace hzhihua\dump\models;
+namespace gogogadgetscott\dump\models;
 
 use yii\db\Connection;
 use yii\db\Query;
