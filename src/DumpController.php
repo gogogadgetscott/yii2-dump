@@ -13,7 +13,7 @@ use yii\db\Connection;
 use yii\db\TableSchema;
 use yii\helpers\Console;
 use yii\console\Controller;
-use hzhihua\dump\models\Schema;
+use gogogadgetscott\dump\models\Schema;
 
 /**
  * Generate migration file from an existing database

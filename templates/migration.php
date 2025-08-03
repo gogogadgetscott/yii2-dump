@@ -13,7 +13,7 @@
 echo "<?php\n";
 ?>
 
-use hzhihua\dump\Migration;
+use gogogadgetscott\dump\Migration;
 
 /**
  * Class <?= $className . "\n"?>

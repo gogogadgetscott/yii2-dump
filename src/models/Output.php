@@ -9,9 +9,9 @@ namespace gogogadgetscott\dump\models;
 
 use Yii;
 use yii\base\View;
-use hzhihua\dump\abstracts\AbstractOutput;
-use hzhihua\dump\exceptions\CouldNotTouchFileException;
-use hzhihua\dump\exceptions\CouldNotMkdirDirectoryException;
+use gogogadgetscott\dump\abstracts\AbstractOutput;
+use gogogadgetscott\dump\exceptions\CouldNotTouchFileException;
+use gogogadgetscott\dump\exceptions\CouldNotMkdirDirectoryException;
 use yii\helpers\Console;
 
 /**
