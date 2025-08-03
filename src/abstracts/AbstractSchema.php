@@ -126,11 +126,11 @@ abstract class AbstractSchema extends Component
             $prefix = Yii::$app->controller->db->tablePrefix ?: null;
         }
 
-        if (strpos($string, $prefix) === false) {
+        if (strpos($string, $prefix ?? '') === false) {
             return $string;
         }
 
-        $position = strpos($string, $prefix) + strlen($prefix);
+        $position = strpos($string, $prefix ?? '') + strlen($prefix);
 
         return substr($string, $position);
     }
