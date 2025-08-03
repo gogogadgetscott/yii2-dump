@@ -124,8 +124,8 @@ class Output extends AbstractOutput
         $enter = self::ENTER;
         $handleNumber = count($handleTable);
         $filterNumber = count($filterTable);
-        $handleTableString = implode($handleTable, ', ');
-        $filterTableString = implode($filterTable, ', ');
+        $handleTableString = implode(', ', $handleTable);
+        $filterTableString = implode(', ', $filterTable);
         $tables = Yii::t('dump', 'Tables');
         $handle = Yii::t('dump', 'Handle');
         $filter = Yii::t('dump', 'Filter');
