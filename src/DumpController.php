@@ -422,6 +422,57 @@ class DumpController extends Controller
     }
 
     /**
+     * Generate a single migration file for each table that combines table, key, and FK.
+     * Usage:
+     *   ./yii dump/combine
+     */
+    public function actionCombine()
+    {
+        $this->output->startPrintf('Process');
+        $tableOptions = $this->getOptions($this->table);
+        $filterOptions = $this->getOptions($this->filter);
+        $info = Yii::t('dump', 'Generate Combined Migration File');
+
+        $safeUp = '';
+        $safeDown = '';
+
+        foreach ($this->db->getSchema()->getTableSchemas() as $table) {
+            // filter some table  -filter=...  -table=...
+            if ($this->filterTable($table->name, $filterOptions, $tableOptions)) {
+                continue;
+            }
+
+            // Gather safeUp and safeDown for table, key, FK
+            $paramsTable = $this->getParams($table, 'table', 2);
+            $paramsKey   = $this->getParams($table, 'key', 2);
+            $paramsFK    = $this->getParams($table, 'FK', 2);
+
+            $safeUp .= $paramsTable['safeUp'] . $paramsKey['safeUp'] . $paramsFK['safeUp'];
+            $safeDown = $paramsFK['safeDown'] . $paramsKey['safeDown'] . $paramsTable['safeDown'] . $safeDown;
+        }
+
+        $className = static::getClassName('combined_all_tables', $this->filePrefix);
+
+        $params = [
+            'safeUp' => $safeUp,
+            'safeDown' => $safeDown,
+            'className' => $className,
+        ];
+
+        $template = Yii::getAlias($this->templateFile);
+        $outputFile = Yii::getAlias($this->generateFilePath) . DIRECTORY_SEPARATOR . $className . '.php';
+
+        $this->output->startPrintf($info);
+        $this->output->stdout($outputFile . "\n");
+        $this->output->generateFile($params, $template, $outputFile);
+        $this->output->endPrintf($info);
+
+        $this->output->conclusion($this->generations, $this->filters);
+        $this->output->endPrintf('Process');
+        return 0;
+    }
+
+    /**
      * print the 'createTable' code.
      *
      * @return int the status of the action execution
