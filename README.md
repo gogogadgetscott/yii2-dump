@@ -2,15 +2,11 @@
 
 Generate migration file from an existing database
 
-> [github: https://github.com/Hzhihua/yii2-dump](https://github.com/Hzhihua/yii2-dump)  
-> [oschina: http://git.oschina.net/hzhihua/yii2-dump](http://git.oschina.net/hzhihua/yii2-dump)
-
-## Demo
-![yii2-dump](https://raw.githubusercontent.com/wiki/Hzhihua/yii2-dump/yii2-dump.png)
+> [github: https://github.com/gogogadgetscott/yii2-dump](https://github.com/gogogadgetscott/yii2-dump)  
 
 ## Test Environment
 
-- PHP >= 5.5.0
+- PHP >= 7.4.0
 - MySQL(5.6.36)
 
 ## Installation
@@ -18,6 +14,9 @@ Generate migration file from an existing database
 ```
 composer require --prefer-dist "hzhihua/yii2-dump:1.0.3"
 ```
+## Change
+- Legacy signature (deprecated as of PHP 7.4.0, removed as of PHP 8.0.0):
+  implode(array $array, string $separator): string
 
 ## Configuration
 
