@@ -120,18 +120,20 @@ abstract class AbstractSchema extends Component
      * @param $prefix string
      * @return string
      */
-    public static function removePrefix($string, $prefix = null)
+    public static function removePrefix($string, $prefix = '')
     {
         if (empty($prefix)) {
-            $prefix = Yii::$app->controller->db->tablePrefix ?: null;
+            $prefix = Yii::$app->controller->db->tablePrefix ?: '';
         }
-
-        if (strpos($string ?? '', $prefix ?? '') === false) {
+        if (empty($string) || empty($prefix)) {
+            return $string;
+        }
+        if (strpos($string, $prefix) === false) {
             return $string;
         }
 
-        $position = strpos($string ?? '', $prefix ?? '') + strlen($prefix);
+        $position = strpos($string, $prefix) + strlen($prefix);
 
-        return substr($string ?? '', $position);
+        return substr($string, $position);
     }
 }
