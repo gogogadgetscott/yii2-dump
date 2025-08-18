@@ -11,6 +11,11 @@
             "email": "cnzhihua@gmail.com",
             "homepage": "https://github.com/Hzhihua/yii2-dump"
         }
+        {
+            "name": "gogogadgetscott",
+            "email": "me@gogogadgetscott.info",
+            "homepage": "https://github.com/gogogadgetscott/yii2-dump"
+        }
     ],
     "require": {
         "php": ">=7.4.0"

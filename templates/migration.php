@@ -18,7 +18,6 @@ use gogogadgetscott\dump\Migration;
 /**
  * Class <?= $className . "\n"?>
  * @property \yii\db\Transaction $_transaction
- * @Github https://github.com/Hzhihua
  */
 class <?= $className ?> extends Migration
 {
