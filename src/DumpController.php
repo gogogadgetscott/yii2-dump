@@ -420,46 +420,86 @@ class DumpController extends Controller
         $this->output->endPrintf('Process');
         return 0;
     }
-
+    
     /**
-     * Generate a single migration file for each table that combines table, key, and FK.
-     * Usage:
-     *   ./yii dump/combine
+     * generate a combined migration file for all over the table
+     * @return int the status of the action execution
      */
     public function actionCombine()
     {
         $this->output->startPrintf('Process');
-        $tableOptions = $this->getOptions($this->table);
+        $tableOptions  = $this->getOptions($this->table);
         $filterOptions = $this->getOptions($this->filter);
         $info = Yii::t('dump', 'Generate Combined Migration File');
 
-        $safeUp = '';
-        $safeDown = '';
+        // Collect fragments separately so:
+        // safeUp:   ALL tables -> ALL keys -> ALL FKs
+        // safeDown: ALL FKs -> ALL keys -> ALL tables
+        $tablesUp = [];
+        $keysUp   = [];
+        $fksUp    = [];
+
+        $fksDown   = [];
+        $keysDown  = [];
+        $tablesDown= [];
 
         foreach ($this->db->getSchema()->getTableSchemas() as $table) {
-            // filter some table  -filter=...  -table=...
             if ($this->filterTable($table->name, $filterOptions, $tableOptions)) {
                 continue;
             }
 
-            // Gather safeUp and safeDown for table, key, FK
+            // Table definitions
             $paramsTable = $this->getParams($table, 'table', 2);
-            $paramsKey   = $this->getParams($table, 'key', 2);
-            $paramsFK    = $this->getParams($table, 'FK', 2);
+            if (!empty($paramsTable['safeUp'])) {
+                $tablesUp[]   = $paramsTable['safeUp'];
+            }
+            if (!empty($paramsTable['safeDown'])) {
+                $tablesDown[] = $paramsTable['safeDown'];
+            }
 
-            $safeUp .= $paramsTable['safeUp'] . $paramsKey['safeUp'] . $paramsFK['safeUp'];
-            $safeDown = $paramsFK['safeDown'] . $paramsKey['safeDown'] . $paramsTable['safeDown'] . $safeDown;
+            // Index / key definitions
+            $paramsKey = $this->getParams($table, 'key', 2);
+            if (!empty($paramsKey['safeUp'])) {
+                $keysUp[]     = $paramsKey['safeUp'];
+            }
+            if (!empty($paramsKey['safeDown'])) {
+                $keysDown[]   = $paramsKey['safeDown'];
+            }
+
+            // Foreign key definitions
+            $paramsFK = $this->getParams($table, 'FK', 2);
+            if (!empty($paramsFK['safeUp'])) {
+                $fksUp[]      = $paramsFK['safeUp'];
+            }
+            if (!empty($paramsFK['safeDown'])) {
+                $fksDown[]    = $paramsFK['safeDown'];
+            }
         }
+
+        // Assemble in required order
+        $safeUp =
+            "\n" .
+            implode('', $tablesUp) .
+            implode('', $keysUp) .
+            implode('', $fksUp) .
+            "\n";
+
+        $safeDown =
+            "\n" .
+            implode('', $fksDown) .
+            implode('', $keysDown) .
+            implode('', $tablesDown) .
+            "\n";
 
         $className = static::getClassName('combined_all_tables', $this->filePrefix);
 
         $params = [
-            'safeUp' => $safeUp,
-            'safeDown' => $safeDown,
+            'safeUp'    => $safeUp,
+            'safeDown'  => $safeDown,
             'className' => $className,
         ];
 
-        $template = Yii::getAlias($this->templateFile);
+        $template   = Yii::getAlias($this->templateFile);
         $outputFile = Yii::getAlias($this->generateFilePath) . DIRECTORY_SEPARATOR . $className . '.php';
 
         $this->output->startPrintf($info);
