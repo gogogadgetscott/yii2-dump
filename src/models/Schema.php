@@ -667,11 +667,12 @@ DEFINITION;
                 break;
         }
 
-        // others
-        if (null === $column->size) {
-            return "$type()";
-        } else {
+        if (null !== $column->precision && null !== $column->scale) {
+            return "$type({$column->precision},{$column->scale})";
+        } elseif (null !== $column->size) {
             return "{$type}({$column->size})";
+        } else {
+            return "$type()";
         }
 
     }
